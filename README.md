@@ -1,5 +1,7 @@
 # Prometheus on Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/prometheus-2?utm_medium=integration&utm_source=button&utm_campaign=prometheus)
+
 A Railway template for [Prometheus](https://prometheus.io), the open-source metrics database and monitoring system. This repo builds the template's only service.
 
 ## What it deploys
