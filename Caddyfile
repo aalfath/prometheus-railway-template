@@ -4,7 +4,12 @@
 }
 
 :{$PORT} {
-	# Railway's health check sends no credentials, so the two status paths stay open.
+	# Railway's health check sends no credentials, so the status paths stay open.
+	# Railway refuses health check paths containing "/-/", hence the /healthz alias.
+	handle /healthz {
+		rewrite * /-/healthy
+		reverse_proxy 127.0.0.1:19090
+	}
 	@status path /-/healthy /-/ready
 	handle @status {
 		reverse_proxy 127.0.0.1:19090

@@ -5,7 +5,7 @@ A Railway template for [Prometheus](https://prometheus.io), the open-source metr
 ## What it deploys
 
 - **Prometheus v3.16.0** from the official image `prom/prometheus:v3.16.0`, pinned by digest in the `Dockerfile`.
-- **A login in front of it.** Prometheus has no login of its own, so a small [Caddy](https://caddyserver.com) 2.11.9 gateway in the same container asks for HTTP basic auth on every path except the status checks `/-/healthy` and `/-/ready`. Prometheus itself listens only on `127.0.0.1:19090` inside the container.
+- **A login in front of it.** Prometheus has no login of its own, so a small [Caddy](https://caddyserver.com) 2.11.9 gateway in the same container asks for HTTP basic auth on every path except the status checks `/healthz` (Railway's health check), `/-/healthy` and `/-/ready`. Prometheus itself listens only on `127.0.0.1:19090` inside the container.
 - **A Railway volume at `/prometheus`** for the time-series data (`/prometheus/data`) and the editable configuration (`/prometheus/config/prometheus.yml`).
 - The remote-write receiver (`/api/v1/write`) and the OTLP receiver (`/api/v1/otlp/v1/metrics`) are on, behind the login, so apps can push metrics instead of being scraped.
 
