@@ -1,0 +1,20 @@
+{
+	admin off
+	auto_https off
+}
+
+:{$PORT} {
+	# Railway's health check sends no credentials, so the two status paths stay open.
+	@status path /-/healthy /-/ready
+	handle @status {
+		reverse_proxy 127.0.0.1:19090
+	}
+
+	# Everything else (UI, query API, remote write, OTLP) needs the login.
+	handle {
+		basic_auth {
+			{$PROMETHEUS_USERNAME} {$PROMETHEUS_PASSWORD_HASH}
+		}
+		reverse_proxy 127.0.0.1:19090
+	}
+}

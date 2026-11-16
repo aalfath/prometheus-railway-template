@@ -1,0 +1,19 @@
+# Default configuration, copied to /prometheus/config/prometheus.yml on first boot.
+# Edit that copy (railway ssh) and redeploy, or set the PROMETHEUS_CONFIG variable
+# to a full YAML file, which replaces it on every start.
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Prometheus scraping itself (internal listener, no login needed).
+  - job_name: prometheus
+    static_configs:
+      - targets: ["127.0.0.1:19090"]
+
+  # Example: scrape another service in the same Railway project over the
+  # private network. Replace the host and port with your service's.
+  # - job_name: my-app
+  #   metrics_path: /metrics
+  #   static_configs:
+  #     - targets: ["my-app.railway.internal:8080"]
